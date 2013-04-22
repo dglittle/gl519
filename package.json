@@ -1,0 +1,14 @@
+{
+    "name" : "gl519",
+    "version" : "0.0.1",
+    "description" : "utilities",
+    "main" : "./index.js",
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/dglittle/gl519.git"
+    },
+    "dependencies" : {
+        "fibers" : "*"
+    },
+    "license" : "MIT"
+}

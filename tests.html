@@ -1,0 +1,29 @@
+<html>
+<head> 
+<title>test</title>
+<style>
+
+</style> 
+</head> 
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="index.js"></script>
+<script>
+_ = gl519
+
+$(function () {
+    _.dialog($('<div style="width:400px;height:400px"/>').append(_.splitHorz(.3, null,
+        $('<button>ok</button>').click(function () {
+            _.closeDialog()
+        }),
+        _.splitVert(.5, null,
+            _.splitHorz(null, null, $('<div style="border:1px solid black"/>').text('tests'), $('<div style="border:1px solid green"/>').text('passed!'), 0),
+            _.splitVert(null, null, $('<div style="border:1px solid lightgrey"/>').text('yup..'), $('<div/>').text('yup..'), 0)
+        )
+    )))
+})
+
+</script>
+
+</body>
+</html>

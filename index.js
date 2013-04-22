@@ -725,3 +725,4 @@ _.wget = function (url, params, encoding) {
 
 return _
 })();
+if (typeof(_) == "undefined") var _ = gl519

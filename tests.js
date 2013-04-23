@@ -11,7 +11,7 @@ _.run(function () {
             _.print('test passed')
         } else {
             _.print('test FAILED' + (name ? ': ' + name : ''))
-            throw "failure"
+            throw new Error("failure")
         }
     }
 

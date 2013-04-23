@@ -318,10 +318,11 @@ _.sortDesc = function (a, func) {
 }
 
 _.toArray = function (a) {
-    var accum = []
-    for (var i = 0; i < a.length; i++)
-        accum[i] = a[i]
-    return accum
+    return Array.prototype.slice.call(a)
+    // var accum = []
+    // for (var i = 0; i < a.length; i++)
+    //     accum[i] = a[i]
+    // return accum
 }
 
 _.ensure = function () {

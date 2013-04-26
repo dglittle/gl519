@@ -239,10 +239,10 @@ _.run(function () {
     // node.js functions...
 
     testing('_.read and _.write')
-    var t = 'some text'
-    _.write('./_test_file.txt', t)
+    var test_file_contents = 'some text'
+    _.write('./_test_file.txt', test_file_contents)
     var s = _.read('./_test_file.txt')
-    verify(s == t)
+    verify(s == test_file_contents)
 
     testing('_.print')
     _.print('hopefully this is visible')
@@ -281,8 +281,17 @@ _.run(function () {
     verify(i == 2)
 
     testing('_.consume and _.wget')
-    var s = _.wget('https://raw.github.com/dglittle/myutil/master/u.js')
-    verify(s.match(/license : public domain/))
+    var s = _.wget('http://dglittle.github.io/gl519/tests.js')
+    verify(s.match(/_\.consume and _\.wget/))
+
+    var res = _.p(require('http').request({
+        method : 'GET',
+        hostname : 'dglittle.github.io',
+        path : '/gl519/tests.js'
+    }, _.p()).end())
+    var buf = _.consume(res, 'buffer')
+    verify(buf instanceof Buffer)
+    verify(('' + buf).match(/_\.consume and _\.wget/))
 
     testing('_.exit')
     _.exit()

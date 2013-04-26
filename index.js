@@ -672,26 +672,18 @@ _.parallel = function (funcs) {
 }
 
 _.consume = function (input, encoding) {
-    if (encoding == 'buffer') {
-        var buffer = new Buffer(1 * input.headers['content-length'])
-        var cursor = 0
-    } else {
-        var chunks = []
+    var chunks = []
+    if (encoding != 'buffer') {
         input.setEncoding(encoding || 'utf8')
     }
     
     var p = _.p()
     input.on('data', function (chunk) {
-        if (encoding == 'buffer') {
-            chunk.copy(buffer, cursor)
-            cursor += chunk.length
-        } else {
-            chunks.push(chunk)
-        }
+        chunks.push(chunk)
     })
     input.on('end', function () {
         if (encoding == 'buffer') {
-            p(buffer)
+            p(Buffer.concat(chunks))
         } else {
             p(chunks.join(''))
         }
@@ -715,12 +707,18 @@ _.wget = function (url, params, encoding) {
     } else {
         var data = _.values(_.map(params, function (v, k) { return k + "=" + encodeURIComponent(v) })).join('&')
     }
-    o.headers = {
-        "Content-Type" : "application/x-www-form-urlencoded; charset=UTF-8",
-        "Content-Length" : Buffer.byteLength(data, 'utf8')
+    if (data) {
+        o.headers = {
+            "Content-Type" : "application/x-www-form-urlencoded; charset=UTF-8",
+            "Content-Length" : Buffer.byteLength(data, 'utf8')
+        }
     }
     
-    require(url.protocol.replace(/:/, '')).request(o, _.p()).end(data, 'utf8')
+    var r = require(url.protocol.replace(/:/, '')).request(o, _.p())
+    if (data)
+        r.end(data, 'utf8')
+    else
+        r.end()
     return _.consume(_.p(), encoding)
 }
 

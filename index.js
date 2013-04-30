@@ -703,9 +703,9 @@ _.wget = function (method, url, params, encoding) {
         hostname : url.hostname,
         path : url.path
     }
-    if (url.port)
-        o.port = url.port
-    
+    if (url.port) o.port = url.port
+    if (url.auth) o.auth = url.auth
+
     if (params) {
         if (typeof(params) == 'string') {
             var data = params

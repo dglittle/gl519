@@ -691,27 +691,33 @@ _.consume = function (input, encoding) {
     return _.p()
 }
 
-_.wget = function (url, params, encoding) {
+_.wget = function (method, url, params, encoding) {
+    if (method && method.match(/:/)) {
+        return _.wget(null, arguments[0], arguments[1], arguments[2])
+    }
+    
     url = require('url').parse(url)
     
     var o = {
-        method : params ? 'POST' : 'GET',
+        method : method || (params ? 'POST' : 'GET'),
         hostname : url.hostname,
         path : url.path
     }
     if (url.port)
         o.port = url.port
     
-    if (params && params.length != null) {
-        var data = params
-    } else {
-        var data = _.values(_.map(params, function (v, k) { return k + "=" + encodeURIComponent(v) })).join('&')
-    }
-    if (data) {
-        o.headers = {
-            "Content-Type" : "application/x-www-form-urlencoded; charset=UTF-8",
-            "Content-Length" : Buffer.byteLength(data, 'utf8')
+    if (params) {
+        if (typeof(params) == 'string') {
+            var data = params
+        } else {
+            var data = _.values(_.map(params, function (v, k) { return k + "=" + encodeURIComponent(v) })).join('&')
         }
+    }
+    o.headers = {}
+    o.headers["User-Agent"] = "gl519/1.0"
+    if (data) {
+        o.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+        o.headers["Content-Length"] = Buffer.byteLength(data, 'utf8')
     }
     
     var r = require(url.protocol.replace(/:/, '')).request(o, _.p())

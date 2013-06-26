@@ -725,7 +725,10 @@ _.wget = function (method, url, params, encoding) {
         r.end(data, 'utf8')
     else
         r.end()
-    return _.consume(_.p(), encoding)
+    var res = _.p()
+    var ret = _.consume(res, encoding)
+    _.wget.res = res
+    return ret
 }
 
 return _

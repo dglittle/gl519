@@ -283,6 +283,8 @@ _.run(function () {
     testing('_.consume and _.wget')
     var s = _.wget('http://dglittle.github.io/gl519/tests.js')
     verify(s.match(/_\.consume and _\.wget/))
+    verify(_.wget.res.statusCode == 200)
+    verify(_.wget.res.headers.server == 'GitHub.com')
 
     var res = _.p(require('http').request({
         method : 'GET',

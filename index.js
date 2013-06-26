@@ -706,16 +706,16 @@ _.wget = function (method, url, params, encoding) {
     if (url.port) o.port = url.port
     if (url.auth) o.auth = url.auth
 
-    if (params) {
-        if (typeof(params) == 'string') {
+    o.headers = {}
+    o.headers["User-Agent"] = "gl519/1.0"
+    if (!o.method.match(/^get$/i)) {
+        if (!params) {
+            var data = ""
+        } else if (typeof(params) == 'string') {
             var data = params
         } else {
             var data = _.values(_.map(params, function (v, k) { return k + "=" + encodeURIComponent(v) })).join('&')
         }
-    }
-    o.headers = {}
-    o.headers["User-Agent"] = "gl519/1.0"
-    if (data) {
         o.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
         o.headers["Content-Length"] = Buffer.byteLength(data, 'utf8')
     }

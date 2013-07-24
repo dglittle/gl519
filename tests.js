@@ -249,6 +249,7 @@ _.run(function () {
 
     testing('_.print')
     _.print('hopefully this is visible')
+    _.print('here is an object:', { a : 'hi', b : 'ho' })
 
     testing('_.md5')
     verify(_.md5('blah') == '6f1ed002ab5595859014ebf0951522d9')

@@ -599,6 +599,11 @@ _.write = _.save = function (f, s) {
 }
 
 _.print = function (o) {
+    if (arguments.length > 1) {
+        for (var i = 0; i < arguments.length; i++)
+            _.print(arguments[i])
+        return
+    }
     if (typeof(o) == 'object') {
         console.log(_.json(o, true))
     } else {

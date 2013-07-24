@@ -59,12 +59,13 @@ _.filter = function (o, func) {
 
 _.reduce = _.fold = function (o, func, init) {
     if (!func) func = _.identity
-    if (o instanceof Array)
-        return o.reduce(func, init)
     var accum = init
     for (var k in o)
         if (o.hasOwnProperty(k))
-            accum = func(accum, o[k])
+            if (accum === undefined)
+                accum = o[k]
+            else
+                accum = func(accum, o[k])
     return accum
 }
 

@@ -77,6 +77,9 @@ _.run(function () {
     testing('_.fold')
     verify(_.deepEquals(_.fold([1, 4, 9], function (a, b) { return a * b }, 2), 2 * 1 * 4 * 9))
     verify(_.deepEquals(_.reduce({a:1, b:4, c:9}, function (a, b) { return a + b }, 6), 20))
+    testing('_.fold again')
+    verify(_.deepEquals(_.fold([1, 4, 9], function (a, b) { return a * b }), 1 * 4 * 9))
+    verify(_.deepEquals(_.reduce({a:1, b:4, c:9}, function (a, b) { return a + b }), 14))
 
     testing('_.min')
     verify(_.min([4, 2, 8], function (e) { return -e }) == 8)

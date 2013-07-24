@@ -1,4 +1,3 @@
-
 // dependencies: jQuery
 // license : public domain
 
@@ -586,6 +585,10 @@ _.unJson = function (s) {
 }
 
 // node.js stuff
+
+_.serveOnExpress = function (express, app) {
+    app.use('/gl519', express.static(__dirname))
+}
 
 _.read = _.slurp = function (f) {
     return '' + require('fs').readFileSync(f)

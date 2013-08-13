@@ -69,10 +69,12 @@ _.run(function () {
     testing('_.map')
     verify(_.deepEquals(_.map([1, 4, 9], function (e) { return Math.sqrt(e) }), [1, 2, 3]))
     verify(_.deepEquals(_.map({a:1, b:4, c:9}, function (v, k) { return k + Math.sqrt(v) }), {a:'a1',b:'b2',c:'c3'}))
+    verify(_.deepEquals(_.map(new Array(3), function (e, i) { return i + 1 }), [1, 2, 3]))
 
     testing('_.filter')
     verify(_.deepEquals(_.filter([1, 4, 9], function (e) { return e % 2 != 0 }), [1, 9]))
     verify(_.deepEquals(_.filter({a:1, b:4, c:9}, function (v, k) { return v % 2 != 0 }), {a:1, c:9}))
+    verify(_.deepEquals(_.filter(new Array(3), function (e, i) { return i < 2 }), [undefined, undefined]))
 
     testing('_.fold')
     verify(_.deepEquals(_.fold([1, 4, 9], function (a, b) { return a * b }, 2), 2 * 1 * 4 * 9))

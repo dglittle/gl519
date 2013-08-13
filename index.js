@@ -35,57 +35,72 @@ _.each = function (o, func) {
 
 _.map = function (o, func) {
     if (!func) func = _.identity
-    if (o instanceof Array)
-        return o.map(func)
-    var accum = {}
-    for (var k in o)
-        if (o.hasOwnProperty(k))
-            accum[k] = func(o[k], k)
-    return accum
+    if (o instanceof Array) {
+        var accum = []
+        for (var i = 0; i < o.length; i++)
+            accum[i] = func(o[i], i)
+        return accum
+    } else {
+        var accum = {}
+        for (var k in o)
+            if (o.hasOwnProperty(k))
+                accum[k] = func(o[k], k)
+        return accum
+    }
 }
 
 _.filter = function (o, func) {
     if (!func) func = _.identity
-    if (o instanceof Array)
-        return o.filter(func)
-    var accum = {}
-    for (var k in o)
-        if (o.hasOwnProperty(k))
-            if (func(o[k], k))
-                accum[k] = o[k]
-    return accum
+    if (o instanceof Array) {
+        var accum = []
+        for (var i = 0; i < o.length; i++)
+            if (func(o[i], i))
+                accum.push(o[i])
+        return accum
+    } else {
+        var accum = {}
+        for (var k in o)
+            if (o.hasOwnProperty(k))
+                if (func(o[k], k))
+                    accum[k] = o[k]
+        return accum
+    }
 }
 
 _.reduce = _.fold = function (o, func, init) {
     if (!func) func = _.identity
     var accum = init
-    for (var k in o)
-        if (o.hasOwnProperty(k))
-            if (accum === undefined)
-                accum = o[k]
-            else
-                accum = func(accum, o[k])
+    _.each(o, function (v, k) {
+        if (accum === undefined)
+            accum = v
+        else
+            accum = func(accum, v)
+    })
     return accum
 }
 
 _.some = _.any = function (o, func) {
     if (!func) func = _.identity
-    if (o instanceof Array)
-        return o.some(func)
-    for (var k in o)
-        if (o.hasOwnProperty(k))
-            if (func(o[k], k)) return true
-    return false
+    var found = false
+    _.each(o, function (v, k) {
+        if (func(v, k)) {
+            found = true
+            return false
+        }
+    })
+    return found
 }
 
 _.every = _.all = function (o, func) {
     if (!func) func = _.identity
-    if (o instanceof Array)
-        return o.every(func)
-    for (var k in o)
-        if (o.hasOwnProperty(k))
-            if (!func(o[k], k)) return false
-    return true
+    var allGood = true
+    _.each(o, function (v, k) {
+        if (!func(v, k)) {
+            allGood = false
+            return false
+        }
+    })
+    return allGood
 }
 
 _.min = function (o, func) {

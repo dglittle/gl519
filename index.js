@@ -423,6 +423,23 @@ _.unescapeXml = function (s) {
     })
 }
 
+_.getUrlParams = function (url) {
+    if (url === undefined) {
+        url = window.location.href
+    }
+    var params = {}
+    var m = url.match(/\?([^#]+)/)
+    if (m) {
+        _.each(m[1].split(/&/), function (m) {
+            if (m.length > 0) {
+                var a = m.split(/=/)
+                params[_.unescapeUrl(a[0])] = a.length > 1 ? _.unescapeUrl(a[1]) : true
+            }
+        })
+    }
+    return params
+}
+
 function splitSizeHelper(prefix, size) {
     if (size == null) return ""
     if (size <= 1) return prefix + '="' + Math.round(100 * size) + '%"'

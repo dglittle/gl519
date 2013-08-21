@@ -232,6 +232,9 @@ _.run(function () {
     verify(_.escapeXml('<') == '&lt;')
     verify(_.unescapeXml('&lt;') == '<')
 
+    testing('_.getUrlParams')
+    verify(_.deepEquals(_.getUrlParams('http://example.com/hello?hi=yo&ho=yum%20yum'), { hi : 'yo', ho : 'yum yum' }))
+
     testing('_.json, _.unJson, _.decycle and _.recycle')
     var a = {}
     a.b = a

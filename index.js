@@ -187,6 +187,15 @@ _.clone = function (o) {
     }
 }
 
+_.deepClone = _.cloneDeep = function (o) {
+    return _.map(o, function (v) {
+        if (typeof(v) == 'object') {
+            return _.cloneDeep(v)
+        }
+        return v
+    })
+}
+
 _.pairs = function (o) {
     var accum = []
     _.each(o, function (v, k) {

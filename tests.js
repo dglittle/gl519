@@ -117,6 +117,15 @@ _.run(function () {
     var b = _.clone(a)
     verify(a != b && _.deepEquals(a, b))
 
+    testing('_.cloneClone')
+    var a = {a : {b : 5, c : [1, 2]}}
+    var b = _.deepClone(a)
+    verify(_.deepEquals(a, b))
+    a.a.b = 6
+    a.a.c[1] = 3
+    verify(_.deepEquals(a, {a : {b : 6, c : [1, 3]}}))
+    verify(_.deepEquals(b, {a : {b : 5, c : [1, 2]}}))
+
     testing('_.pairs')
     verify(_.deepEquals(_.pairs([1, 4, 9]), [[0, 1], [1, 4], [2, 9]]))
     verify(_.deepEquals(_.pairs({a:1, b:4, c:9}), [['a', 1], ['b', 4], ['c', 9]]))

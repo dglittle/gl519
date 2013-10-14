@@ -313,6 +313,49 @@ _.run(function () {
     verify(buf instanceof Buffer)
     verify(('' + buf).match(/_\.consume and _\.wget/))
 
+    // md5.js
+
+    testing('md5.js')
+    require('./md5.js')
+    verify(md5('blah') == '6f1ed002ab5595859014ebf0951522d9')
+
+    // aes.js
+
+    testing('aes.js')
+    require('./aes.js')
+    var a = aes_encrypt('hello', 'pass')
+    var b = aes_decrypt(a, 'pass')
+    var c = aes_decrypt(a, 'wrong_pass')
+    verify(a != 'hello')
+    verify(b == 'hello')
+    verify(c != 'hello')
+
+    // random.js
+
+    testing('random.js')
+    var a = Math.random()
+    require('./random.js')
+    Math.randomSeed(5)
+    var x = Math.random()
+    Math.randomSeed(6)
+    var b = Math.random()
+    Math.randomSeed(5)
+    var y = Math.random()
+    verify(x == y)
+    verify(a != x)
+    verify(b != x)
+
+    Math.randomSeed('hello')
+    var x = Math.random()
+    Math.randomSeed('hi?')
+    var b = Math.random()
+    Math.randomSeed('hello')
+    var y = Math.random()
+    verify(x == y)
+    verify(b != x)
+
+    //
+
     testing('_.exit')
     _.exit()
     _.print("hopefully we don't see this")

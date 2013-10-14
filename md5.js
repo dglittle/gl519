@@ -1,5 +1,5 @@
 
-function md5(s) { return hex_md5(s) }
+md5 = function md5(s) { return hex_md5(s) }
 
 /*
  * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message

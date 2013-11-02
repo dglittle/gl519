@@ -722,6 +722,8 @@ _.parallel = function (funcs) {
 }
 
 _.consume = function (input, encoding) {
+    if (encoding == 'stream') return input
+        
     var chunks = []
     if (encoding != 'buffer') {
         input.setEncoding(encoding || 'utf8')

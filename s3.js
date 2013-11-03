@@ -36,7 +36,9 @@ function restCall(id, secret, httpVerb, bucket, path, data, params, encoding) {
     if (path) path = prependSlash(path)
     if (!params) params = {}
     
-    var buffer = (typeof data == "object") ? data : null
+    if (data instanceof require('stream').Readable)
+        data = _.consume(data, 'buffer')
+    var buffer = data instanceof Buffer
     
     params["Date"] = new Date().toUTCString()
     

@@ -97,6 +97,11 @@ _.run(function () {
     verify(_.find([4, 2, 16, 8], function (e) { return e / 4 == 4 }) == 16)
     verify(_.find({a:false, b:5, c:false}) == 5)
 
+    testing('_.range')
+    verify(_.deepEquals(_.range(10), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))
+    verify(_.deepEquals(_.range(1, 11), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+    verify(_.deepEquals(_.range(0, 30, 5), [0, 5, 10, 15, 20, 25]))
+
     testing('_.keys')
     verify(_.deepEquals(_.keys([1, 4, 9]), ['0', '1', '2']))
     verify(_.deepEquals(_.keys({a:1, b:4, c:9}), ['a', 'b', 'c']))

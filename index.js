@@ -143,6 +143,16 @@ _.find = function (o, func) {
     return found
 }
 
+_.range = function (start, stop, step) {
+    if (stop == null) return _.range(0, start)
+    if (step == null) step = 1
+    var r = []
+    for (var i = start; i < stop; i += step) {
+        r.push(i)
+    }
+    return r
+}
+
 _.size = function (o) {
     if (o instanceof Array)
         return o.length

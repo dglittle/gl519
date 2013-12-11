@@ -319,6 +319,13 @@ _.shuffle = function (a) {
     return a
 }
 
+_.randomInt = _.randomInteger = _.randomIndex = function (a, b) {
+    if (b === undefined)
+        return Math.floor(a * Math.random())
+    else
+        return a + _.randomInt(b - a)
+}
+
 _.randomString = function (len, re) {
     re = re || /[a-zA-Z0-9]/
     var chars = []

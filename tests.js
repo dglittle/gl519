@@ -211,6 +211,10 @@ _.run(function () {
     }
     verify(count > 2 && count < 98)
 
+    testing('_.randomInt')
+    verify(_.all(_.map(new Array(100), function () { return _.randomInt(10) }), function (x) { return x >= 0 && x < 10 }))
+    verify(_.all(_.map(new Array(100), function () { return _.randomInt(-20, -10) }), function (x) { return x >= -20 && x < -10 }))
+
     testing('_.randomString')
     var x = _.randomString(5, /a/)
     verify(x == 'aaaaa')

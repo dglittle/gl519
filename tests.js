@@ -185,6 +185,12 @@ _.run(function () {
     testing('_.lerp')
     verify(_.lerp(0, 0, 1, 1, .5) == .5)
 
+    testing('_.lerpCap')
+    verify(_.lerpCap(0, 0, 1, 1, -1) == 0)
+    verify(_.lerpCap(0, 0, 1, 1, 2) == 1)
+    verify(_.lerpCap(0, 1, 1, 0, -1) == 1)
+    verify(_.lerpCap(0, 1, 1, 0, 2) == 0)
+
     testing('_.time')
     verify(Math.abs(_.time() - (new Date().getTime())) < 10)
 

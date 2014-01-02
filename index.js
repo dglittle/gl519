@@ -23,12 +23,12 @@ _.each = function (o, func) {
     if (!func) func = _.identity
     if (o instanceof Array) {
         for (var i = 0; i < o.length; i++)
-            if (func(o[i], i) == false)
+            if (func(o[i], i, o) == false)
                 break
     } else {
         for (var k in o)
             if (o.hasOwnProperty(k))
-                if (func(o[k], k) == false)
+                if (func(o[k], k, o) == false)
                     break
     }
 }
@@ -38,13 +38,13 @@ _.map = function (o, func) {
     if (o instanceof Array) {
         var accum = []
         for (var i = 0; i < o.length; i++)
-            accum[i] = func(o[i], i)
+            accum[i] = func(o[i], i, o)
         return accum
     } else {
         var accum = {}
         for (var k in o)
             if (o.hasOwnProperty(k))
-                accum[k] = func(o[k], k)
+                accum[k] = func(o[k], k, o)
         return accum
     }
 }
@@ -54,14 +54,14 @@ _.filter = function (o, func) {
     if (o instanceof Array) {
         var accum = []
         for (var i = 0; i < o.length; i++)
-            if (func(o[i], i))
+            if (func(o[i], i, o))
                 accum.push(o[i])
         return accum
     } else {
         var accum = {}
         for (var k in o)
             if (o.hasOwnProperty(k))
-                if (func(o[k], k))
+                if (func(o[k], k, o))
                     accum[k] = o[k]
         return accum
     }
@@ -74,7 +74,7 @@ _.reduce = _.fold = function (o, func, init) {
         if (accum === undefined)
             accum = v
         else
-            accum = func(accum, v)
+            accum = func(accum, v, k, o)
     })
     return accum
 }
@@ -83,7 +83,7 @@ _.some = _.any = function (o, func) {
     if (!func) func = _.identity
     var found = false
     _.each(o, function (v, k) {
-        if (func(v, k)) {
+        if (func(v, k, o)) {
             found = true
             return false
         }
@@ -95,7 +95,7 @@ _.every = _.all = function (o, func) {
     if (!func) func = _.identity
     var allGood = true
     _.each(o, function (v, k) {
-        if (!func(v, k)) {
+        if (!func(v, k, o)) {
             allGood = false
             return false
         }
@@ -108,7 +108,7 @@ _.min = function (o, func) {
     var bestScore = null
     var best = null
     _.each(o, function (v, k) {
-        var score = func(v, k)
+        var score = func(v, k, o)
         if (bestScore === null || score < bestScore) {
             bestScore = score
             best = v
@@ -122,7 +122,7 @@ _.max = function (o, func) {
     var bestScore = null
     var best = null
     _.each(o, function (v, k) {
-        var score = func(v, k)
+        var score = func(v, k, o)
         if (bestScore === null || score > bestScore) {
             bestScore = score
             best = v
@@ -135,7 +135,7 @@ _.find = function (o, func) {
     if (!func) func = _.identity
     var found = null
     _.each(o, function (v, k) {
-        if (func(v, k)) {
+        if (func(v, k, o)) {
             found = v
             return false
         }
@@ -284,6 +284,18 @@ _.bagAdd = function (bag, key, amount) {
 
 _.lerp = function (t0, v0, t1, v1, t) {
     return (t - t0) * (v1 - v0) / (t1 - t0) + v0
+}
+
+_.lerpCap = function (t0, v0, t1, v1, t) {
+    var v = (t - t0) * (v1 - v0) / (t1 - t0) + v0
+    if (v0 < v1) {
+        if (v < v0) v = v0
+        else if (v > v1) v = v1
+    } else {
+        if (v > v0) v = v0
+        else if (v < v1) v = v1
+    }
+    return v
 }
 
 _.time = function () {

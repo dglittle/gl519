@@ -369,6 +369,13 @@ _.run(function () {
     verify(x == y)
     verify(b != x)
 
+    // math.js
+
+    testing('math.js')
+    require('./math.js')
+    verify(Math.abs(normal(0, 1, 4) - 0.00013383) < 0.000001)
+    verify(Math.abs(normal(3, 2, 4) - 0.176033) < 0.000001)
+
     //
 
     testing('_.exit')

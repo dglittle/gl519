@@ -162,6 +162,7 @@ _.size = function (o) {
 _.deepEquals = function (a, b) {
     if (typeof(a) != typeof(b)) return false
     if (typeof(a) == 'object') {
+        if (a == b) return true // handles null
         return _.size(a) == _.size(b) && _.all(a, function (v, k) {
             return _.has(b, k) && _.deepEquals(b[k], v)
         })
@@ -198,6 +199,7 @@ _.clone = function (o) {
 }
 
 _.deepClone = _.cloneDeep = function (o) {
+    if (o == null) return o
     return _.map(o, function (v) {
         if (typeof(v) == 'object') {
             return _.cloneDeep(v)

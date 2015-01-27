@@ -314,7 +314,9 @@ _.run(function () {
     verify(i == 2)
 
     testing('_.consume and _.wget')
-    var s = _.wget('http://dglittle.github.io/gl519/tests.js')
+    var s = _.wget('http://dglittle.github.io/gl519/tests.js', null, null, function (o) {
+        verify(o.method == 'GET')
+    })
     verify(s.match(/_\.consume and _\.wget/))
     verify(_.wget.res.statusCode == 200)
     verify(_.wget.res.headers.server == 'GitHub.com')

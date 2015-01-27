@@ -774,9 +774,9 @@ _.consume = function (input, encoding) {
     return _.p()
 }
 
-_.wget = function (method, url, params, encoding) {
+_.wget = function (method, url, params, encoding, runMe) {
     if (method && method.match(/:/)) {
-        return _.wget(null, arguments[0], arguments[1], arguments[2])
+        return _.wget(null, arguments[0], arguments[1], arguments[2], arguments[3])
     }
     
     url = require('url').parse(url)
@@ -802,6 +802,8 @@ _.wget = function (method, url, params, encoding) {
         o.headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
         o.headers["Content-Length"] = Buffer.byteLength(data, 'utf8')
     }
+
+    if (runMe) runMe(o)
     
     var r = require(url.protocol.replace(/:/, '')).request(o, _.p())
     if (data)
